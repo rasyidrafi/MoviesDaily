@@ -55,6 +55,7 @@ MovieRating.propTypes = {
   style: PropTypes.object,
   textColor: PropTypes.string,
   color: PropTypes.string,
+  runtime: PropTypes.number,
 };
 
 MovieRating.defaultProps = {

@@ -2,7 +2,7 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Text } from "react-native";
 
-import { black, white, orange } from "../helper/Color";
+import { white, orange } from "../helper/Color";
 import TVShowScreen from "../screen/TVShowScreen";
 import MovieScreen from "../screen/MovieScreen";
 

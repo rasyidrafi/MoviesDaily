@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
-import { View, StyleSheet, TouchableWithoutFeedback, Text, ActivityIndicator } from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback, Text } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome5";
 
@@ -10,10 +10,6 @@ import { orange, white } from "../../helper/Color";
 class MoviePlayButton extends Component {
   state = {
     isModalShown: false,
-  };
-
-  toggleModal = (param) => {
-    this.setState((prevState) => ({ isModalShown: param }));
   };
 
   renderPlayButton = () => {
@@ -27,7 +23,7 @@ class MoviePlayButton extends Component {
   };
 
   onPressPlay = (key) => {
-    this.toggleModal(false);
+    this.setState({ isModalShown: false });
     this.props.navigation.navigate("Webview", { id: key });
   };
 
@@ -57,7 +53,7 @@ class MoviePlayButton extends Component {
         style={{ justifyContent: "flex-end", margin: 0 }}
         swipeDirection={"down"}
         onBackButtonPress={() => this.setState({ isModalShown: false })}
-        onBackdropPress={(e) => this.setState({ isModalShown: false })}
+        onBackdropPress={() => this.setState({ isModalShown: false })}
         onSwipeComplete={() => this.setState({ isModalShown: false })}
       >
         <View style={_styles.modalStyle}>

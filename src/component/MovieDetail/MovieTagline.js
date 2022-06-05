@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View, Text } from "react-native";
-import { white, orange } from "../../helper/Color";
-import { Styles } from "./Styles";
+import { white } from "../../helper/Color";
 
 const MovieTagline = ({ tagline }) => {
   if (!tagline) return null;
@@ -22,4 +21,5 @@ export default MovieTagline;
 
 MovieTagline.propTypes = {
   title: PropTypes.string,
+  tagline: PropTypes.string,
 };

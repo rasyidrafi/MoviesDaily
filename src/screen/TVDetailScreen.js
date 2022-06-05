@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, Text, StatusBar, ScrollView, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { View, Text, ScrollView, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
 import { requestTvDetailScreen } from "../api/api";
 

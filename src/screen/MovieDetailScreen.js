@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, StatusBar, ScrollView, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import { View, ScrollView, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 
-import { requestMovieDetailScreen, requestStream, requestMp4 } from "../api/api";
+import { requestMovieDetailScreen } from "../api/api";
 
 import MovieBackdrop from "../component/MovieDetail/MovieBackdrop";
 import MovieOverview from "../component/MovieDetail/MovieOverview";
@@ -13,7 +13,7 @@ import MovieGenres from "../component/MovieDetail/MovieGenres";
 import MovieRating from "../component/MovieDetail/MovieRating";
 import MoviePlayButton from "../component/MovieDetail/MoviePlayButton";
 import MovieTitle from "../component/MovieDetail/MovieTitle";
-import { black, orange, white } from "../helper/Color";
+import { black, white } from "../helper/Color";
 import BackIcon from "../component/Utils/BackIcon";
 import LoadingScreen from "./LoadingScreen";
 import MovieTagline from "../component/MovieDetail/MovieTagline";
