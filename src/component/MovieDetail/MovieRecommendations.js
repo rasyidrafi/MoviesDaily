@@ -17,6 +17,7 @@ const MovieRecommendations = ({ recommendations, navigation }) => {
       <Text style={Styles.titleText}>Recommendations</Text>
       <FlatList
         keyExtractor={(item) => item.id.toString()}
+        ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
         data={movieData}
         renderItem={({ item }) => Recommendations(item, navigation, route)}
         horizontal

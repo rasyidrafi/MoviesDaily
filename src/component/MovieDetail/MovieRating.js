@@ -12,7 +12,7 @@ const MovieRating = ({ rating, style, textColor }) => {
       <View style={{ flexDirection: "row" }}>
         <Star color={white} />
         <Star color={yellow} rating={rating} />
-        <Text style={[_styles.ratingText, { color: textColor }]}>{(rating / 2).toFixed(1)}</Text>
+        <Text style={[_styles.ratingText, { color: textColor }]}>{rating.toFixed(1)}</Text>
       </View>
     );
   };

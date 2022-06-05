@@ -19,8 +19,9 @@ const MoviesRow = ({ data, title, navigation, type }) => {
         data={data}
         horizontal
         renderItem={({ item }) => <MoviePoster item={item} navigation={navigation} type={type} />}
+        ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
         keyExtractor={(item) => item.id.toString()}
-        style={{ margin: 8, marginTop: 4 }}
+        style={{ marginHorizontal: 12, marginTop: 4 }}
         showsHorizontalScrollIndicator={false}
       />
     </View>

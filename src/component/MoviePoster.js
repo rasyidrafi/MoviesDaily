@@ -41,7 +41,6 @@ MoviePoster.defaultProps = {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    margin: 4,
     backgroundColor: gray,
     borderRadius: 12,
     overflow: "hidden",

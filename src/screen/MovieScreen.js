@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import HomeComponent from "../component/Home/HomeComponent";
 import { requestMovieScreen as RequestMovieApi } from "../api/api";
 import { MovieTypes } from "../helper/Types";
+import LoadingIcon from "./LoadingScreen";
 
 class MovieScreen extends Component {
   constructor(props) {

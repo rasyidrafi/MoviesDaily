@@ -96,7 +96,7 @@ const _styles = StyleSheet.create({
     marginRight: 32,
     width: 60,
     height: 60,
-    borderRadius: 12,
+    borderRadius: 50,
     backgroundColor: orange,
     justifyContent: "center",
   },

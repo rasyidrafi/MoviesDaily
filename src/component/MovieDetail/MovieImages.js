@@ -51,6 +51,7 @@ class MovieImages extends Component {
         <FlatList
           keyExtractor={(item) => item.file_path}
           data={this.images}
+          ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
           renderItem={({ item, index }) => imageComponent(item, index, this.onPressImage)}
           horizontal
           showsHorizontalScrollIndicator={false}

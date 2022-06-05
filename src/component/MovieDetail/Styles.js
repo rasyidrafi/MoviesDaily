@@ -23,9 +23,9 @@ export const Styles = StyleSheet.create({
   castImageContainer: {
     overflow: "hidden",
     height: 85,
-    width: 75,
+    width: 85,
     borderRadius: 10,
-    marginRight: 8,
+    // marginRight: 8,
     backgroundColor: gray,
   },
 
@@ -34,20 +34,18 @@ export const Styles = StyleSheet.create({
   },
 
   castImage: {
-    width: 75,
-    height: 110,
+    width: 85,
+    height: 85,
   },
 
   movieImages: {
     height: 100,
-    marginRight: 8,
     borderRadius: 10,
   },
 
   movieRecommImages: {
     height: 150,
     width: 100,
-    marginRight: 8,
     borderRadius: 10,
   },
 });
