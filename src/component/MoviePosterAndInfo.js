@@ -36,7 +36,7 @@ class MoviesPosterandInfo extends PureComponent {
               <Text style={{ fontFamily: "Montserrat", fontSize: 16, marginBottom: 10 }}>
                 {moment(data.release_date).format("YYYY")}
               </Text>
-              <MovieRating rating={data.vote_average} textColor={black} />
+              <MovieRating rating={data.vote_average} textColor={black} runtime={data.runtime} />
               <Text style={{ fontFamily: "Montserrat-Light", fontSize: 12, marginTop: 10, width: "75%" }}>
                 {this.Genres(data.genre_ids)}
               </Text>

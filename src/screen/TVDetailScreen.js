@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, StatusBar, ScrollView, StyleSheet } from "react-native";
+import { View, Text, StatusBar, ScrollView, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
 import { requestTvDetailScreen } from "../api/api";
 
@@ -17,6 +17,9 @@ import { black, white } from "../helper/Color";
 import BackIcon from "../component/Utils/BackIcon";
 import MovieSeason from "../component/MovieDetail/MovieSeason";
 import LoadingScreen from "./LoadingScreen";
+import MovieTagline from "../component/MovieDetail/MovieTagline";
+
+import { Styles as StylesRoot } from "../component/MovieDetail/Styles";
 
 class TVDetailScreen extends Component {
   constructor(props) {
@@ -54,7 +57,8 @@ class TVDetailScreen extends Component {
         {isLoaded && (
           <View>
             <MovieTitle title={movieData.name} />
-            <MovieRating rating={movieData.vote_average} />
+            <MovieTagline tagline={movieData.tagline} />
+            <MovieRating rating={movieData.vote_average} runtime={movieData.runtime} />
           </View>
         )}
       </MovieBackdrop>
@@ -90,11 +94,36 @@ class TVDetailScreen extends Component {
         {this.state.isLoaded ? (
           <View style={{ flex: 1, backgroundColor: white }}>
             <ScrollView style={Styles.scrollview} contentContainerStyle={{ flexGrow: 1 }} bounces={false}>
-              <StatusBar translucent backgroundColor={"transparent"} />
+              {/* <StatusBar translucent backgroundColor={"transparent"} /> */}
               {this.movieInfoGeneral()}
               {this.movieInfoDetail()}
             </ScrollView>
-            <BackIcon navigation={navigation} style={{ marginLeft: 5, position: "absolute", top: 40 }} color={white} />
+            <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  position: "absolute",
+                  top: 30,
+                  left: 10,
+                  height: 40,
+                  flex: 1,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "rgba(252,107,2,0.8)",
+                  borderRadius: 50,
+                }}
+              >
+                <BackIcon navigation={navigation} color={white} />
+                <Text
+                  style={[
+                    StylesRoot.bottomText,
+                    { color: "white", marginTop: 0, width: 50, fontFamily: "Montserrat-SemiBold" },
+                  ]}
+                >
+                  Back
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         ) : (
           <LoadingScreen />

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, StatusBar, ScrollView, StyleSheet } from "react-native";
+import { View, StatusBar, ScrollView, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 
-import { requestMovieDetailScreen } from "../api/api";
+import { requestMovieDetailScreen, requestStream, requestMp4 } from "../api/api";
 
 import MovieBackdrop from "../component/MovieDetail/MovieBackdrop";
 import MovieOverview from "../component/MovieDetail/MovieOverview";
@@ -13,10 +13,12 @@ import MovieGenres from "../component/MovieDetail/MovieGenres";
 import MovieRating from "../component/MovieDetail/MovieRating";
 import MoviePlayButton from "../component/MovieDetail/MoviePlayButton";
 import MovieTitle from "../component/MovieDetail/MovieTitle";
-import { black, white } from "../helper/Color";
+import { black, orange, white } from "../helper/Color";
 import BackIcon from "../component/Utils/BackIcon";
 import LoadingScreen from "./LoadingScreen";
+import MovieTagline from "../component/MovieDetail/MovieTagline";
 
+import { Styles as StylesRoot } from "../component/MovieDetail/Styles";
 class MovieDetailScreen extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +29,7 @@ class MovieDetailScreen extends Component {
       videos: {},
       recommendations: {},
       isLoaded: false,
+      stream: {},
     };
   }
 
@@ -38,6 +41,16 @@ class MovieDetailScreen extends Component {
     const { id } = this.props.route.params;
     console.log("movie id", id);
 
+    // const res = await requestStream(id);
+    // function renderStream() {
+    //   if (!res || res.msg != "OK") return;
+    //   if (!res.result.files.length) return;
+    //   const currentFiles = res.result.files[0];
+    //   if (!currentFiles.canplay) return;
+    //   if (currentFiles.title != id) return;
+    //   requestMp4(currentFiles.file_code);
+    // }
+    // renderStream();
     await requestMovieDetailScreen(id, this.callbackRequest);
   };
 
@@ -48,12 +61,14 @@ class MovieDetailScreen extends Component {
 
   movieInfoGeneral = () => {
     const { movieData, isLoaded } = this.state;
+    console.log(movieData);
     return (
       <MovieBackdrop backdrop={movieData.backdrop_path}>
         {isLoaded && (
           <View>
             <MovieTitle title={movieData.title} />
-            <MovieRating rating={movieData.vote_average} />
+            <MovieTagline tagline={movieData.tagline} />
+            <MovieRating rating={movieData.vote_average} runtime={movieData.runtime} />
           </View>
         )}
       </MovieBackdrop>
@@ -88,11 +103,36 @@ class MovieDetailScreen extends Component {
         {this.state.isLoaded ? (
           <View style={{ flex: 1, backgroundColor: white }}>
             <ScrollView style={Styles.scrollview} contentContainerStyle={{ flexGrow: 1 }} bounces={false}>
-              <StatusBar translucent backgroundColor={"transparent"} />
+              {/* <StatusBar translucent backgroundColor={"transparent"} /> */}
               {this.movieInfoGeneral()}
               {this.movieInfoDetail()}
             </ScrollView>
-            <BackIcon navigation={navigation} style={{ marginLeft: 5, position: "absolute", top: 40 }} color={white} />
+            <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  position: "absolute",
+                  top: 30,
+                  left: 10,
+                  height: 40,
+                  flex: 1,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "rgba(252,107,2,0.8)",
+                  borderRadius: 50,
+                }}
+              >
+                <BackIcon navigation={navigation} color={white} />
+                <Text
+                  style={[
+                    StylesRoot.bottomText,
+                    { color: "white", marginTop: 0, width: 50, fontFamily: "Montserrat-SemiBold" },
+                  ]}
+                >
+                  Back
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         ) : (
           <LoadingScreen />

@@ -12,8 +12,8 @@ const HomeDrawerNavigator = () => {
   return (
     <Drawer.Navigator
       initialRouteName="Movies"
-      drawerType={"slide"}
-      drawerStyle={{ width: "50%", backgroundColor: black }}
+      drawerType={"front"}
+      drawerStyle={{ width: "50%", backgroundColor: "rgba(0,0,0, 0.8)" }}
       drawerContentOptions={{
         activeBackgroundColor: "transparent",
         activeTintColor: orange,

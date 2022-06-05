@@ -14,6 +14,7 @@ import BackIcon from "../component/Utils/BackIcon";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import NoImageSeason from "../assets/img/no-image-season.png";
+import LoadingScreen from "./LoadingScreen";
 
 class MovieSeasonScreen extends Component {
   constructor(props) {
@@ -35,6 +36,9 @@ class MovieSeasonScreen extends Component {
   fetchSeasonData = async (season_number) => {
     const { movieid } = this.props.route.params;
     let tempData = this.state.dataSeason;
+    this.setState({
+      isLoaded: false,
+    });
     if (!tempData[season_number]) tempData[season_number] = await request(getTvShowSeasonUrl(movieid, season_number));
 
     if (tempData[season_number]) this.setState({ dataSeason: tempData, isLoaded: true, season_number: season_number });
@@ -215,12 +219,18 @@ class MovieSeasonScreen extends Component {
 
   render() {
     return (
-      <Screen>
-        {this.renderTitle()}
-        {this.renderSeasonDropdown()}
-        {this.renderEpisodeList()}
-        {this.renderListSeasonModal()}
-      </Screen>
+      <>
+        {this.state.isLoaded ? (
+          <Screen>
+            {this.renderListSeasonModal()}
+            {this.renderTitle()}
+            {this.renderSeasonDropdown()}
+            {this.renderEpisodeList()}
+          </Screen>
+        ) : (
+          <LoadingScreen />
+        )}
+      </>
     );
   }
 }

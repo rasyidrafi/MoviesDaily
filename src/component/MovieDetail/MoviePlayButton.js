@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
-import { View, StyleSheet, TouchableWithoutFeedback, Text } from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback, Text, ActivityIndicator } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome5";
 
@@ -12,13 +12,13 @@ class MoviePlayButton extends Component {
     isModalShown: false,
   };
 
-  toggleModal = () => {
-    this.setState((prevState) => ({ isModalShown: !prevState.isModalShown }));
+  toggleModal = (param) => {
+    this.setState((prevState) => ({ isModalShown: param }));
   };
 
   renderPlayButton = () => {
     return (
-      <TouchableWithoutFeedback onPress={this.toggleModal}>
+      <TouchableWithoutFeedback onPress={() => this.setState({ isModalShown: true })}>
         <View style={_styles.wrapper}>
           <Icon name={"play"} size={20} color={white} style={_styles.icon} />
         </View>
@@ -27,7 +27,7 @@ class MoviePlayButton extends Component {
   };
 
   onPressPlay = (key) => {
-    this.toggleModal();
+    this.toggleModal(false);
     this.props.navigation.navigate("Webview", { id: key });
   };
 
@@ -51,24 +51,22 @@ class MoviePlayButton extends Component {
   renderModal = () => {
     const { results = [] } = this.props.videoData;
 
-    if (this.state.isModalShown && results.length !== 0) {
-      return (
-        <Modal
-          isVisible={this.state.isModalShown}
-          style={{ justifyContent: "flex-end", margin: 0 }}
-          swipeDirection={"down"}
-          onBackButtonPress={this.toggleModal}
-          onBackdropPress={this.toggleModal}
-          onSwipeComplete={this.toggleModal}
-        >
-          <View style={_styles.modalStyle}>
-            <View style={_styles.bar} />
-            <Text style={_styles.videoText}>Videos</Text>
-            {this.videoItem()}
-          </View>
-        </Modal>
-      );
-    }
+    return (
+      <Modal
+        isVisible={this.state.isModalShown}
+        style={{ justifyContent: "flex-end", margin: 0 }}
+        swipeDirection={"down"}
+        onBackButtonPress={() => this.setState({ isModalShown: false })}
+        onBackdropPress={(e) => this.setState({ isModalShown: false })}
+        onSwipeComplete={() => this.setState({ isModalShown: false })}
+      >
+        <View style={_styles.modalStyle}>
+          <View style={_styles.bar} />
+          <Text style={_styles.videoText}>Videos</Text>
+          {results.length != 0 && this.videoItem()}
+        </View>
+      </Modal>
+    );
   };
 
   render() {

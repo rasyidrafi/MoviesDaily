@@ -6,13 +6,33 @@ import { white, yellow } from "../../helper/Color";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const MovieRating = ({ rating, style, textColor }) => {
+const MovieRating = ({ rating, style, textColor, runtime }) => {
+  const Runtime = () => {
+    if (!runtime) return null;
+    const totalMinutes = runtime;
+
+    // render total minutes to format 2h 30m
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    const hoursString = hours > 0 ? `${hours}h ` : "";
+    const minutesString = minutes > 0 ? `${minutes}m` : "";
+
+    return (
+      <Text>
+        | {hoursString}
+        {minutesString}
+      </Text>
+    );
+  };
+
   const Rating = () => {
     return (
       <View style={{ flexDirection: "row" }}>
         <Star color={white} />
         <Star color={yellow} rating={rating} />
-        <Text style={[_styles.ratingText, { color: textColor }]}>{rating.toFixed(1)}</Text>
+        <Text style={[_styles.ratingText, { color: textColor }]}>
+          {rating.toFixed(1)} <Runtime />
+        </Text>
       </View>
     );
   };

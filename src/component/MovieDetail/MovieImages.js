@@ -68,7 +68,9 @@ const imageComponent = (data, index, onPress) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => onPress(index)} style={[style, Styles.imagePlaceholder]}>
-      <FastImage source={imageUrl} style={style} />
+      <View style={{ ...Styles.movieImages, backgroundColor: "#e9e9e9" }}>
+        <FastImage source={imageUrl} style={style} />
+      </View>
     </TouchableWithoutFeedback>
   );
 };

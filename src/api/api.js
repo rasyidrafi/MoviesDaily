@@ -19,6 +19,8 @@ import {
   getTvShowVideoUrl,
   getMustWatchMoviesUrl,
   getMustWatchTVShowUrl,
+  getStreamUrl,
+  getMp4Stream,
 } from "./url";
 
 export const request = async (url) => {
@@ -87,4 +89,12 @@ export const requestSearchMovie = async (keyword) => {
 
 export const requestSearchTv = async (keyword) => {
   return await request(getSearchTvUrl(keyword));
+};
+
+export const requestStream = async (id) => {
+  return await request(getStreamUrl(id));
+};
+
+export const requestMp4 = async (file_id) => {
+  return await request(getMp4Stream(file_id));
 };

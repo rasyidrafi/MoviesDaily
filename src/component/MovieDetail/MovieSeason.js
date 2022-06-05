@@ -8,7 +8,6 @@ import { getImageUrl } from "../../api/url";
 import { Styles } from "./Styles";
 
 const MovieSeason = ({ seasonData, navigation, movieid }) => {
-  console.log(seasonData);
   const seasons = seasonData[0].season_number < 1 ? [...seasonData.slice(1), seasonData[0]] : seasonData;
   const seasonName = seasonData.map((item) => item.name);
 

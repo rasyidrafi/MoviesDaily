@@ -1,6 +1,11 @@
 const ROOT_URL = "https://api.themoviedb.org/3";
 const IMAGE_URL = "https://image.tmdb.org/t/p/";
 const API_KEY = "1abb3e68d878be1155d781ce812f80a8";
+const STREAM_KEY = "31657g1lrnnrhqpsxe68e";
+const STREAM_ROOT = "https://api.streamsb.com/api/";
+const FLD_ID = "101760";
+const STREAM_BASE_URL = (id) =>
+  `${STREAM_ROOT}file/list?key=${STREAM_KEY}&page=1&per_page=1&fld_id=${FLD_ID}&public=0&title=${id}`;
 
 const defaultQuery = {
   api_key: API_KEY,
@@ -14,6 +19,10 @@ const queryString = (obj) => {
     .map(([index, val]) => `${index}=${val}`)
     .join("&");
 };
+
+export const getStreamUrl = (id) => STREAM_BASE_URL(id);
+
+export const getMp4Stream = (fileId) => `${STREAM_ROOT}file/direct?key=${STREAM_KEY}&file_code=${fileId}`;
 
 export const getPopularMoviesUrl = (page) => `${ROOT_URL}/movie/popular?${queryString({ ...defaultQuery, ...page })}`;
 export const getTopRatedMoviesUrl = (page) =>
