@@ -5,6 +5,7 @@ import { getImageUrl } from "../../api/url";
 import { View, Text, FlatList, TouchableWithoutFeedback } from "react-native";
 import { Styles } from "./Styles";
 import { useRoute } from "@react-navigation/native";
+import NoImagePoster from "../../assets/img/no-image-poster.png";
 
 const MovieRecommendations = ({ recommendations, navigation }) => {
   const movieData = recommendations.results.slice(0, 10);
@@ -28,7 +29,7 @@ const MovieRecommendations = ({ recommendations, navigation }) => {
 };
 
 const Recommendations = (data, navigation, route) => {
-  const imageUrl = getImageUrl(data.poster_path, "uri", "w185");
+  const imageUrl = data.poster_path == null ? NoImagePoster : getImageUrl(data.poster_path, "uri", "w185");
 
   return (
     <TouchableWithoutFeedback onPress={() => navigation.push(route, { id: data.id })}>

@@ -15,6 +15,8 @@ class SearchScreen extends Component {
     super(props);
     this.state = {
       search: {},
+      param: "",
+      isLoading: false,
     };
   }
 
@@ -39,27 +41,80 @@ class SearchScreen extends Component {
   };
 
   renderSearchText = () => {
+    const { param } = this.state;
+    const randomPlaceholder = ["Avengers: Endgame", "The Irishman", "Titanic", "Interstellar"];
+    const placeholder = randomPlaceholder[Math.floor(Math.random() * randomPlaceholder.length)];
+    const searchRef = React.createRef();
+
     return (
       <View style={_styles.searchContainer}>
-        <Icon name={"search"} size={20} style={{ margin: 12 }} />
-        <View style={{ alignSelf: "center", flex: 1 }}>
+        <View style={{ alignSelf: "center", flex: 1, justifyContent: "center" }}>
           <TextInput
             style={_styles.searchInput}
-            placeholder={"Avengers: End Game"}
-            onChangeText={(text) => this.requestMovie(text)}
+            placeholder={placeholder}
+            value={param}
+            onSubmitEditing={() => {
+              if (!param) return;
+              this.requestMovie(this.state.param);
+            }}
+            onChangeText={(text) => this.setState({ param: text })}
             returnKeyType={"search"}
             autoCorrect={false}
+            ref={searchRef}
           />
         </View>
+        <Icon
+          name={"close-outline"}
+          onPress={() => {
+            this.setState({ param: "" });
+            searchRef.current.focus();
+          }}
+          size={28}
+          style={{
+            paddingVertical: 8,
+            paddingLeft: 10,
+            paddingRight: 5,
+            backgroundColor: "#e9e9e9",
+          }}
+        />
+        <Icon
+          name={"search"}
+          onPress={() => {
+            if (!param) return;
+            this.requestMovie(this.state.param);
+            searchRef.current.blur();
+          }}
+          size={20}
+          style={{
+            padding: 12,
+            paddingLeft: 5,
+            backgroundColor: "#e9e9e9",
+            borderTopRightRadius: 50,
+            borderBottomRightRadius: 50,
+          }}
+        />
       </View>
     );
   };
 
   renderListMovies = () => {
     const { results = [] } = this.state.search;
+    const { isLoading } = this.state;
     const { type } = this.props.route.params;
     const { navigation } = this.props;
-    return <MovieList results={results} navigation={navigation} type={type} />;
+    return (
+      <>
+        {isLoading || results.length == 0 ? (
+          <View>
+            <Text style={{ fontFamily: "Montserrat-Bold", fontSize: 16, textAlign: "center", marginTop: 14 }}>
+              {!isLoading ? "No result found" : "Loading..."}
+            </Text>
+          </View>
+        ) : (
+          <MovieList results={results} navigation={navigation} type={type} />
+        )}
+      </>
+    );
   };
 
   render() {
@@ -78,11 +133,13 @@ class SearchScreen extends Component {
   };
 
   requestMovie = async (text) => {
+    if (this.state.isLoading) return;
     const { type } = this.props.route.params;
+    this.setState({ isLoading: true });
     const requestSearch = type === "tv" ? requestSearchTv : requestSearchMovie;
     if (text !== "") {
       const search = await requestSearch(text);
-      if (search) this.setState({ search });
+      if (search) this.setState({ search, isLoading: false });
     }
   };
 }
@@ -133,6 +190,6 @@ const _styles = StyleSheet.create({
     fontFamily: "Montserrat-Medium",
     fontSize: 14,
     flex: 1,
-    marginRight: 12,
+    marginLeft: 12,
   },
 });

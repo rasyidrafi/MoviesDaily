@@ -13,6 +13,7 @@ const MovieList = ({ results, navigation, type, onReachEnd }) => {
       renderItem={({ item }) => <MoviesPosterandInfo data={item} navigation={navigation} type={type} />}
       contentContainerStyle={{ marginVertical: 8 }}
       onEndReached={onReachEnd}
+      style={{ marginVertical: 12 }}
       onEndReachedThreshold={0.9}
     />
   );

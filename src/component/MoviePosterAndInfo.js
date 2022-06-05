@@ -5,6 +5,7 @@ import { View, TouchableWithoutFeedback, Text } from "react-native";
 import MoviePoster from "./MoviePoster";
 import MovieRating from "./MovieDetail/MovieRating";
 import { black } from "../helper/Color";
+import moment from "moment";
 
 class MoviesPosterandInfo extends PureComponent {
   Genres = (genreId = []) => {
@@ -25,12 +26,15 @@ class MoviesPosterandInfo extends PureComponent {
             }
           }}
         >
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <MoviePoster item={data} height={150} width={100} navigation={navigation} type={type} />
             <View style={{ margin: 16, justifyContent: "center", marginBottom: 24, flex: 1 }}>
               <Text style={{ fontFamily: "Montserrat-Bold", fontSize: 16, marginBottom: 10 }} numberOfLines={2}>
                 {data.name}
                 {data.title}
+              </Text>
+              <Text style={{ fontFamily: "Montserrat", fontSize: 16, marginBottom: 10 }}>
+                {moment(data.release_date).format("YYYY")}
               </Text>
               <MovieRating rating={data.vote_average} textColor={black} />
               <Text style={{ fontFamily: "Montserrat-Light", fontSize: 12, marginTop: 10, width: "75%" }}>

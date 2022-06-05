@@ -13,6 +13,7 @@ import { white, orange } from "../helper/Color";
 import BackIcon from "../component/Utils/BackIcon";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import NoImageSeason from "../assets/img/no-image-season.png";
 
 class MovieSeasonScreen extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class MovieSeasonScreen extends Component {
       isLoaded: false,
       season_number: season.season_number,
       isModalVisible: false,
+      textShown: {},
     };
   }
 
@@ -39,7 +41,9 @@ class MovieSeasonScreen extends Component {
   };
 
   seasonEpisode = (data) => {
-    const imageUrl = getImageUrl(data.still_path, "uri", "w500");
+    const { textShown } = this.state;
+    const imageUrl = data.still_path ? getImageUrl(data.still_path, "uri", "w500") : NoImageSeason;
+
     return (
       <View style={{ margin: 8, backgroundColor: white, overflow: "hidden", flex: 1 }}>
         <View style={{ flexDirection: "row" }}>
@@ -56,7 +60,8 @@ class MovieSeasonScreen extends Component {
         </View>
         <Text
           style={{ fontFamily: "Montserrat-Regular", fontSize: 14, paddingVertical: 8, textAlign: "justify" }}
-          numberOfLines={4}
+          numberOfLines={textShown[data.id] ? 0 : 4}
+          onPress={() => this.setState({ textShown: { ...textShown, [data.id]: !textShown[data.id] } })}
         >
           {data.overview}
         </Text>

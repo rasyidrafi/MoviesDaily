@@ -5,8 +5,11 @@ import FastImage from "react-native-fast-image";
 
 import { getImageUrl } from "../api/url";
 import { gray } from "../helper/Color";
+import NoImagePoster from "../assets/img/no-image-poster.png";
 
 const MoviePoster = ({ item, navigation, height, width, type }) => {
+  const imageUrl = item.poster_path == null ? NoImagePoster : getImageUrl(item.poster_path);
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -17,8 +20,8 @@ const MoviePoster = ({ item, navigation, height, width, type }) => {
         }
       }}
     >
-      <View style={styles.imageContainer}>
-        <FastImage style={{ height, width }} resizeMode="cover" source={getImageUrl(item.poster_path)} />
+      <View style={[styles.imageContainer, { height, width }]}>
+        <FastImage style={{ height, width }} resizeMode="cover" source={imageUrl} />
       </View>
     </TouchableWithoutFeedback>
   );

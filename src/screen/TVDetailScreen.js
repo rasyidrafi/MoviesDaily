@@ -16,6 +16,7 @@ import MovieTitle from "../component/MovieDetail/MovieTitle";
 import { black, white } from "../helper/Color";
 import BackIcon from "../component/Utils/BackIcon";
 import MovieSeason from "../component/MovieDetail/MovieSeason";
+import LoadingScreen from "./LoadingScreen";
 
 class TVDetailScreen extends Component {
   constructor(props) {
@@ -85,14 +86,20 @@ class TVDetailScreen extends Component {
   render() {
     const { navigation } = this.props;
     return (
-      <View style={{ flex: 1, backgroundColor: white }}>
-        <ScrollView style={Styles.scrollview} contentContainerStyle={{ flexGrow: 1 }} bounces={false}>
-          <StatusBar translucent backgroundColor={"transparent"} />
-          {this.movieInfoGeneral()}
-          {this.movieInfoDetail()}
-        </ScrollView>
-        <BackIcon navigation={navigation} style={{ marginLeft: 5, position: "absolute", top: 40 }} color={white} />
-      </View>
+      <>
+        {this.state.isLoaded ? (
+          <View style={{ flex: 1, backgroundColor: white }}>
+            <ScrollView style={Styles.scrollview} contentContainerStyle={{ flexGrow: 1 }} bounces={false}>
+              <StatusBar translucent backgroundColor={"transparent"} />
+              {this.movieInfoGeneral()}
+              {this.movieInfoDetail()}
+            </ScrollView>
+            <BackIcon navigation={navigation} style={{ marginLeft: 5, position: "absolute", top: 40 }} color={white} />
+          </View>
+        ) : (
+          <LoadingScreen />
+        )}
+      </>
     );
   }
 }
